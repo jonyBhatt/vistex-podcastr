@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Vistex",
   description: "Generate your podcast free with AI",
   icons: {
-    icon: "/icon/logo.svg",
+    icon: "/icons/logo.svg",
   },
 };
 
