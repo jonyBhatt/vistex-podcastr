@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+import { fontFamily } from "tailwindcss/defaultTheme";
 const config = {
   darkMode: ["class"],
   content: [
@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        manrope: ["var(--manrope)", ...fontFamily.sans],
+      },
       colors: {
         white: {
           1: "#FFFFFF",
