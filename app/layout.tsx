@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import ConvexClientProvider from "@/components/ConvexClientProvider";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--manrope" });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("font-manrope", manrope.variable)}>{children}</body>
+      <body className={cn("font-manrope", manrope.variable)}>
+        <ConvexClientProvider>{children}</ConvexClientProvider>
+      </body>
     </html>
   );
 }
