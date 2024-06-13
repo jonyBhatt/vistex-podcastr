@@ -6,10 +6,10 @@ export default defineSchema({
     user: v.id("users"),
     podcastTitle: v.string(),
     podcastDescription: v.string(),
-    imgURL: v.optional(v.string()),
-    imgURLId: v.optional(v.id("_storage")),
-    audioURL: v.optional(v.string()),
+    audioUrl: v.optional(v.string()),
     audioStorageId: v.optional(v.id("_storage")),
+    imageUrl: v.optional(v.string()),
+    imageStorageId: v.optional(v.id("_storage")),
     author: v.string(),
     authorId: v.string(),
     authorImageUrl: v.string(),
@@ -25,7 +25,7 @@ export default defineSchema({
   users: defineTable({
     email: v.string(),
     imageUrl: v.string(),
-    authId: v.string(),
+    clerkId: v.string(),
     name: v.string(),
   }),
 });

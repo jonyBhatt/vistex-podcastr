@@ -14,6 +14,19 @@ export default function ConvexClientProvider({
   return (
     <ClerkProvider
       publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      appearance={{
+        layout: {
+          socialButtonsVariant: "iconButton",
+          logoImageUrl: "/icons/auth-logo.svg",
+        },
+        variables: {
+          colorBackground: "#15171c",
+          colorPrimary: "",
+          colorText: "#fff",
+          colorInputBackground: "#1b1f29",
+          colorInputText: "white",
+        },
+      }}
     >
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         {children}
