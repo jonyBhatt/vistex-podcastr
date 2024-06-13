@@ -1,6 +1,7 @@
 "use client";
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
+import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -46,6 +47,7 @@ export default function LeftSidebar() {
             </Link>
           );
         })}
+        <UserButton afterSignOutUrl="/" showName />
       </nav>
     </section>
   );
