@@ -27,32 +27,49 @@ import { Loader } from "lucide-react";
 import { useState } from "react";
 import { GeneratePodcast } from "./GeneratePodcast";
 import { GenerateThumbnail } from "./GenerateThumbnail";
+import { Id } from "@/convex/_generated/dataModel";
+import { VoiceType } from "@/types";
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
   podcastTitle: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+    message: "Title must be at least 2 characters.",
   }),
-  podcastDescription: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+  podcastDescription: z.string().min(2),
 });
 export const CreatePodcastForm = () => {
-  const [voiceType, setVoiceType] = useState<string | null>(null);
+  /**
+   * * Voice
+   */
+  const [voiceType, setVoiceType] = useState<VoiceType>("alloy");
+  const [voicePrompt, setVoicePrompt] = useState("");
+  /**
+   * * Image
+   */
+  const [imagePrompt, setImagePrompt] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageStorageId, setImageStorageId] = useState<Id<"_storage"> | null>(
+    null
+  );
+  /**
+   * * Audio
+   */
+  const [audioStorageId, setAudioStorageId] = useState<Id<"_storage"> | null>(
+    null
+  );
+  const [audioUrl, setAudioUrl] = useState("");
+  const [audioDuration, setAudioDuration] = useState(0);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      podcastTitle: "",
+      podcastDescription: "",
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
   const voiceCategories = ["alloy", "shimmer", "nova", "echo", "fable", "onyx"];
@@ -65,11 +82,11 @@ export const CreatePodcastForm = () => {
         <div className="flex flex-col gap-[30px] border-b border-black-5 pb-10">
           <FormField
             control={form.control}
-            name="username"
+            name="podcastTitle"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2.5">
                 <FormLabel className="text-16 font-bold text-white-1">
-                  Username
+                  Podcast Title
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -86,10 +103,10 @@ export const CreatePodcastForm = () => {
             <Label className="text-16 font-bold text-white-1">
               Select AI voice
             </Label>
-            <Select onValueChange={(value) => setVoiceType(value)}>
+            <Select onValueChange={(value: VoiceType) => setVoiceType(value)}>
               <SelectTrigger
                 className={cn(
-                  "text-16 w-full border-none bg-black-1 text-gray-1 focus-visible:ring-offset-0 focus:ring-0"
+                  "text-16 w-full border-none bg-black-1 text-gray-1 focus-visible:ring-offset-orange-1 focus:ring-0"
                 )}
               >
                 <SelectValue
@@ -136,7 +153,15 @@ export const CreatePodcastForm = () => {
         </div>
 
         <div className="flex flex-col pt-10">
-          <GeneratePodcast />
+          <GeneratePodcast
+            setAudioStorageId={setAudioStorageId}
+            setAudioDuration={setAudioDuration}
+            setAudio={setAudioUrl}
+            audio={audioUrl}
+            voiceType={voiceType}
+            voicePrompt={voicePrompt}
+            setVoicePrompt={setVoicePrompt}
+          />
           <GenerateThumbnail />
 
           <div className="mt-10 w-full">
